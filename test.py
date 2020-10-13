@@ -14,7 +14,7 @@ bot = commands.Bot(command_prefix='#')
 async def cool_bot(ctx,*args):
 	if len(args) >=2 :
 		if args[0] == 'anime' and args[1] == 'desc':
-			anime = args[2]
+			anime = " ".join(args[2:])
 			response = anime_desc(anime)
 			await ctx.send(response)
 		else :
