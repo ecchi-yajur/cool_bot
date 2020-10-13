@@ -19,9 +19,9 @@ def anime_desc(anime):
 	soup1 = BeautifulSoup(r1.content,'html.parser')
 	#print(soup1.prettify())
 	descanime = soup1.find('p',attrs = {'itemprop':'description'})
-	descmanga = soup1.find('span',attrs = {'itemprop':'description'})
 	#print(descanime.text)
 	if descanime == None:
+		descmanga = soup1.find('span',attrs = {'itemprop':'description'})
 		return descmanga.text
 	return descanime.text
 #description = anime_desc(anime)
