@@ -5,7 +5,7 @@ def anime_desc(anime):
 	URL = "https://myanimelist.net/search/all?q="+anime+"&cat=all"
 	r = requests.get(URL) 
 	#print(r.content) 
-	soup = BeautifulSoup(r.content, 'html5lib')
+	soup = BeautifulSoup(r.content, 'html.parser')
 	#print(soup.prettify())
 	table = soup.find('article')  
 	#print(table)
@@ -16,10 +16,12 @@ def anime_desc(anime):
 	#print(urlval)
 	urlscrape = urlval[0]
 	r1 = requests.get(urlscrape)
-	soup1 = BeautifulSoup(r1.content,'html5lib')
+	soup1 = BeautifulSoup(r1.content,'html.parser')
 	#print(soup1.prettify())
 	desc = soup1.find('p',attrs = {'itemprop':'description'})
 	#print(desc.text)
 	return desc.text
 #description = anime_desc(anime)
 #print(description)
+
+
