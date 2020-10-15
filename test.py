@@ -3,7 +3,7 @@ import random
 import discord
 from discord.ext import commands
 from dotenv import load_dotenv
-from scraper import anime_desc,anime_info
+from scraper import anime_desc,anime_info,anime_search
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -31,6 +31,21 @@ async def cool_bot(ctx,*args):
 			embed.title = "anime information"
 			embed.description = response
 			embed.set_image(url=img)
+			embed.colour = 0x00FFFF
+			embed.set_footer(text = 'cool_bot OwO 🤖')
+			embed.set_thumbnail(url = bot.user.avatar_url)
+			await ctx.send(embed = embed)
+		elif args[0] == 'search':
+			anime = " ".join(args[1:])
+			anime_list = anime_search(anime)
+			embed = discord.Embed()
+			embed.title = "anime search"
+			anime_list_str = ""
+			i = 1
+			for row in anime_list:
+				anime_list_str = anime_list_str+str(i)+". "+row+"\n"
+				i = i + 1
+			embed.description = anime_list_str
 			embed.colour = 0x00FFFF
 			embed.set_footer(text = 'cool_bot OwO 🤖')
 			embed.set_thumbnail(url = bot.user.avatar_url)
