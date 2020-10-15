@@ -17,14 +17,15 @@ def anime_desc(anime):
 	urlscrape = urlval[0]
 	r1 = requests.get(urlscrape)
 	soup1 = BeautifulSoup(r1.content,'html.parser')
+	img = soup1.find('img',attrs = {'itemprop':'image'})
 	#print(soup1.prettify())
 	descanime = soup1.find('p',attrs = {'itemprop':'description'})
 	#print(descanime.text)
 	#print(descanime.prettify())
 	if descanime == None:
 		descmanga = soup1.find('span',attrs = {'itemprop':'description'})
-		return descmanga.text
-	return descanime.text
+		return descmanga.text,img['data-src']
+	return descanime.text,img['data-src']
 def anime_info(anime):
 	URL = "https://myanimelist.net/search/all?q="+anime+"&cat=all"
 	r = requests.get(URL) 
