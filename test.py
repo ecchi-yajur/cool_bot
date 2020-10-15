@@ -12,7 +12,7 @@ bot = commands.Bot(command_prefix='#')
 
 @bot.command(name='anime')
 async def cool_bot(ctx,*args):
-	if len(args) >=1 :
+	if len(args) >1 :
 		if args[0] == 'desc':
 			anime = " ".join(args[1:])
 			response,img = anime_desc(anime)
