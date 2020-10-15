@@ -22,6 +22,7 @@ async def cool_bot(ctx,*args):
 			embed.set_image(url=img)
 			embed.colour = 0x00FFFF
 			embed.set_footer(text = 'cool_bot OwO 🤖')
+			embed.set_thumbnail(url = bot.user.avatar_url)
 			await ctx.send(embed = embed)
 		elif args[0] == 'info':
 			anime = " ".join(args[1:])
@@ -32,6 +33,7 @@ async def cool_bot(ctx,*args):
 			embed.set_image(url=img)
 			embed.colour = 0x00FFFF
 			embed.set_footer(text = 'cool_bot OwO 🤖')
+			embed.set_thumbnail(url = bot.user.avatar_url)
 			await ctx.send(embed = embed)
 		else :
 			await ctx.send('invalid')	
