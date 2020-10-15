@@ -10,26 +10,27 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 
 bot = commands.Bot(command_prefix='#')
 
-@bot.command(name='cool')
+@bot.command(name='anime')
 async def cool_bot(ctx,*args):
-	if len(args) >=2 :
-		if args[0] == 'anime' and args[1] == 'desc':
-			anime = " ".join(args[2:])
-			response = anime_desc(anime)
+	if len(args) >=1 :
+		if args[0] == 'desc':
+			anime = " ".join(args[1:])
+			response,img = anime_desc(anime)
 			embed = discord.Embed()
 			embed.title = "anime description"
 			embed.description = response
-			embed.colour = 0x17700b
+			embed.set_image(url=img)
+			embed.colour = 0x00FFFF
 			embed.set_footer(text = 'cool_bot OwO 🤖')
 			await ctx.send(embed = embed)
-		elif args[0] == 'anime' and args[1] == 'info':
-			anime = " ".join(args[2:])
+		elif args[0] == 'info':
+			anime = " ".join(args[1:])
 			response,img = anime_info(anime)
 			embed = discord.Embed()
 			embed.title = "anime information"
 			embed.description = response
 			embed.set_image(url=img)
-			embed.colour = 0x17700b
+			embed.colour = 0x00FFFF
 			embed.set_footer(text = 'cool_bot OwO 🤖')
 			await ctx.send(embed = embed)
 		else :
