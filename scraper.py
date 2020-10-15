@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 import requests
-#anime = "onepiece"
+#anime = "bleach"
 def anime_desc(anime):
 	URL = "https://myanimelist.net/search/all?q="+anime+"&cat=all"
 	r = requests.get(URL) 
@@ -42,9 +42,12 @@ def anime_info(anime):
 	r1 = requests.get(urlscrape)
 	soup1 = BeautifulSoup(r1.content,'html.parser')
 	#print(soup1.prettify())
+	img = soup1.find('img',attrs = {'itemprop':'image'})
+	#print(img['data-src'])
 	info = soup1.find('td',attrs = {'class':'borderClass','width':'225','style':'border-width: 0 1px 0 0;','valign':'top'})
 	rows = info.findAll('span',attrs = {'class':'dark_text'})
 	final_info = ""
+	manga = "false"
 	for row in rows:
 		check1 = row.parent.findAll('span',attrs = {'itemprop':'genre'})
 		if check1 != []:
@@ -71,16 +74,24 @@ def anime_info(anime):
 		if check3 != []:
 			checkt = row.parent.find('sup')
 			if checkt != []:
-				final_info = final_info+" "+row.text+" "+checkt.previous_sibling+"\n"
+				final_info = final_info+" "+row.text
+				final_info = final_info+" "+checkt.previous_sibling+"\n"
 				#print(row.text)
 				#print(checkt.previous_sibling)
 				continue
 			final_info = final_info + " invalid "
 			#print("invalid")
-		final_info = final_info+" "+row.parent.text+"\n"
+		checkmanga = row.parent.findAll('a')
+		if checkmanga != []:
+			if checkmanga[0].text == "Manga":
+				manga = "true"
+		if manga == "true":
+			final_info = final_info+" "+row.parent.text+"\n"
+			continue
+		final_info = final_info+" "+row.parent.text
 		#print(row.parent.text)
 	#print(info.prettify())
-	return final_info
+	return final_info,img['data-src']
 #print(anime_info(anime))
 #description = anime_desc(anime)
 #print(description)
