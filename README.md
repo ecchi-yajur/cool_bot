@@ -1,7 +1,8 @@
 # cool_bot
 discord bot for anime rn
 
-henlo tis me Shreekanth (test commit)
+change made
+shreekanth made this change
 
 ## Scraper first searches for title on MyAnimeList then goes to title page and fetches description
 
