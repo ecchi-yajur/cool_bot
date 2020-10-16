@@ -89,3 +89,21 @@ def anime_info(anime):
 #print(anime_info(anime))
 #description = anime_desc(anime)
 #print(description)
+
+def anime_recommend(anime):
+	url = anime_search(anime)[0]
+	r1 = requests.get(url)
+	soup1 = BeautifulSoup(r1.content,'html.parser')
+	soup1 = soup1.find('ul' ,'anime-slide js-anime-slide')
+	soup1 = soup1.findAll('li' , 'btn-anime')
+
+	titles = []
+	for soup in soup1:
+		spantext = soup.find('span' , 'title fs10').text
+		titles.append(spantext)
+	
+	#only recommend top 10 , for compactness
+	if len(titles) > 10:
+		titles =  titles[0:10]
+	
+	return titles
