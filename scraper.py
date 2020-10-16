@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 import requests
-anime = "bleach"
+#anime = "bleach"
 def anime_search(anime):
 	URL = "https://myanimelist.net/search/all?q="+anime+"&cat=all"
 	r = requests.get(URL) 
