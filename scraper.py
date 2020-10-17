@@ -91,8 +91,8 @@ def anime_info(anime):
 #print(description)
 
 def anime_recommend(anime):
-	url = anime_search(anime)[0]
-	r1 = requests.get(url)
+	urlscrape = anime_search(anime)[0]
+	r1 = requests.get(urlscrape)
 	soup1 = BeautifulSoup(r1.content,'html.parser')
 	soup1 = soup1.find('ul' ,'anime-slide js-anime-slide')
 	soup1 = soup1.findAll('li' , 'btn-anime')
