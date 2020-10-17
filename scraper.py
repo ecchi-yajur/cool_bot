@@ -89,7 +89,6 @@ def anime_info(anime):
 #print(anime_info(anime))
 #description = anime_desc(anime)
 #print(description)
-
 def anime_recommend(anime):
 	url = anime_search(anime)[0]
 	r1 = requests.get(url)
@@ -107,3 +106,16 @@ def anime_recommend(anime):
 		titles =  titles[0:10]
 	
 	return titles
+
+def anime_trailer(anime):
+	topurl = anime_search(anime)[0]
+	topurl += '/video'
+	r1 = requests.get(topurl)
+	soup1 = BeautifulSoup(r1.content,'html.parser')
+	soup1 = soup1.findAll('div' , 'video-list-outer po-r pv')
+	linklist = []
+	for soup in soup1:
+		tt = soup.find('a',href = True)
+		linklist.append(tt['href'])
+	return linklist
+

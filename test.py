@@ -3,7 +3,7 @@ import random
 import discord
 from discord.ext import commands
 from dotenv import load_dotenv
-from scraper import anime_desc,anime_info,anime_search,anime_recommend
+from scraper import anime_desc,anime_info,anime_search,anime_recommend,anime_trailer
 from utils import easyembed
 
 load_dotenv()
@@ -44,6 +44,17 @@ async def cool_bot(ctx,*args):
 				i = i + 1
 			embed = easyembed(bot,"anime recommendations",anime_list_str)
 			await ctx.send(embed = embed)
+		elif args[0] == 'trailer':
+			anime = " ".join(args[1:])
+			links = anime_trailer(anime)
+			description = ""
+			i = 1
+			for link in links:
+				description += str(i) + ". " +  link + "\n"
+				i += 1
+			embed = easyembed(bot,"anime trailers" , description)
+			await ctx.send(embed=embed)
+
 		else :
 			await ctx.send('invalid')	
 	else :
