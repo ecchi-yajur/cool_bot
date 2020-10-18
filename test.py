@@ -2,14 +2,23 @@ import os
 import random
 import discord
 from discord.ext import commands
+from discord import FFmpegPCMAudio
+from youtube_dl import YoutubeDL
 from dotenv import load_dotenv
 from scraper import anime_desc,anime_info,anime_search,anime_recommend,anime_trailer
 from utils import easyembed
+from asyncio import sleep
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 
 bot = commands.Bot(command_prefix='#')
+
+players = {}
+
+
+
+
 
 @bot.command(name='anime')
 async def cool_bot(ctx,*args):
@@ -54,7 +63,25 @@ async def cool_bot(ctx,*args):
 				i += 1
 			embed = easyembed(bot,"anime trailers" , description)
 			await ctx.send(embed=embed)
-
+		elif args[0] == 'joinvc':
+			server = ctx.guild
+			user = ctx.message.author
+			voiceState = user.voice
+			if not voiceState :
+				await ctx.send('You must be in a voice channel to invoke this command ')
+				return
+			voiceChannel = voiceState.channel
+			voiceClient = await voiceChannel.connect()
+			YDL_OPTIONS = {'format': 'bestaudio', 'noplaylist':'True'}
+			FFMPEG_OPTIONS = {'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5', 'options': '-vn' , }
+			url = " ".join(args[1:])
+			with YoutubeDL(YDL_OPTIONS) as ydl:
+				info = ydl.extract_info(url, download=False)
+			URL = info['formats'][-1]['url']
+			voiceClient.play(FFmpegPCMAudio(URL, **FFMPEG_OPTIONS))
+			while voiceClient.is_playing():
+				sleep(1)
+			await voiceClient.disconnect()
 		else :
 			await ctx.send('invalid')	
 	else :
