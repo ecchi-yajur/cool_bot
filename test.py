@@ -6,7 +6,7 @@ from discord import FFmpegPCMAudio
 from youtube_dl import YoutubeDL
 from dotenv import load_dotenv
 from scraper import anime_desc,anime_info,anime_search,anime_recommend,anime_trailer,anime_song
-from utils import easyembed
+from utils import easyembed,helpstring
 import asyncio
 from youtube_search import YoutubeSearch
 import json
@@ -17,7 +17,8 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 bot = commands.Bot(command_prefix='#')
 players = {}
 
-@bot.command(name='anime')
+@bot.command(name='anime',brief='==> anime/manga + a little bit of music bot',
+	help=helpstring)
 async def cool_bot(ctx,*args):
 	if len(args) >1 :
 		if args[0] == 'desc':
