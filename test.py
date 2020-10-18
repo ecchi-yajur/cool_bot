@@ -5,7 +5,7 @@ from discord.ext import commands
 from discord import FFmpegPCMAudio
 from youtube_dl import YoutubeDL
 from dotenv import load_dotenv
-from scraper import anime_desc,anime_info,anime_search,anime_recommend,anime_trailer
+from scraper import anime_desc,anime_info,anime_search,anime_recommend,anime_trailer,anime_song
 from utils import easyembed
 import asyncio
 load_dotenv()
@@ -59,6 +59,10 @@ async def cool_bot(ctx,*args):
 				i += 1
 			embed = easyembed(bot,"anime trailers" , description)
 			await ctx.send(embed=embed)
+		elif args[0] == 'song':
+			anime = " ".join(args[1:])
+			anime_song_str = anime_song(anime)
+			embed = easyembed(bot,"anime openings and endings",anime_song_str)
 		elif args[0] == 'joinvc':
 			server = ctx.guild
 			user = ctx.message.author
