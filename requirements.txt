@@ -1,0 +1,6 @@
+ffmpeg
+youtube_dl
+dotenv
+discord
+youtube_search
+bs4(beautifulsoup)
