@@ -8,13 +8,14 @@ from dotenv import load_dotenv
 from scraper import anime_desc,anime_info,anime_search,anime_recommend,anime_trailer,anime_song
 from utils import easyembed
 import asyncio
+from youtube_search import YoutubeSearch
+import json
+
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 
 bot = commands.Bot(command_prefix='#')
-
 players = {}
-
 
 @bot.command(name='anime')
 async def cool_bot(ctx,*args):
@@ -63,33 +64,43 @@ async def cool_bot(ctx,*args):
 			anime = " ".join(args[1:])
 			anime_song_str = anime_song(anime)
 			embed = easyembed(bot,"anime openings and endings",anime_song_str)
-		elif args[0] == 'joinvc':
+			await ctx.send(embed = embed)
+		elif args[0] == 'play':
+			search_query = " ".join(args[1:])
 			server = ctx.guild
 			user = ctx.message.author
 			voiceState = user.voice
 			if not voiceState :
-				await ctx.send('You must be in a voice channel to invoke this command ')
+				await ctx.send('You must be in a voice channel to invoke this command 🔇')
 				return
 			voiceChannel = voiceState.channel
 			voiceClient = await voiceChannel.connect()
 			YDL_OPTIONS = {'format': 'bestaudio', 'noplaylist':'True'}
 			FFMPEG_OPTIONS = {'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5', 'options': '-vn' , }
-			url = " ".join(args[1:])
+			results = YoutubeSearch(search_query, max_results=10).to_json()
+			results = json.loads(results)
+			url_suffix = results['videos'][0]['url_suffix']
+			video_title = results['videos'][0]['title']
+			thumbnail = results['videos'][0]['thumbnails'][0]
+			url = 'https://www.youtube.com' + url_suffix 
 			with YoutubeDL(YDL_OPTIONS) as ydl:
 				info = ydl.extract_info(url, download=False)
 			URL = info['formats'][-1]['url']
+			await ctx.send(embed = easyembed(bot,'Music Time 🔈🔉🔊',"playing song " + video_title + "..." , thumbnailurl = 'no' , imgurl = thumbnail))
 			voiceClient.play(FFmpegPCMAudio(URL, **FFMPEG_OPTIONS))
 			while voiceClient.is_playing():
 				await asyncio.sleep(1)
 			await voiceClient.disconnect()
 			print('bot has left voice channel')
 		else :
-			await ctx.send('invalid')	
+			await ctx.send('invalid ❌')	
 	elif len(args) == 1:
 		if args[0] == 'owner':
 			await ctx.send('I was Coded by Yajurmani and Shreikthegod 😳')
+		else :
+			await ctx.send('invalid ❌')
 	else:
-		await ctx.send('invalid')	
+		await ctx.send('invalid Command ❌')	
 
 @bot.event
 async def on_ready():
