@@ -118,4 +118,42 @@ def anime_trailer(anime):
 		tt = soup.find('a',href = True)
 		linklist.append(tt['href'])
 	return linklist
-
+def anime_song(anime):
+	urlval = anime_search(anime)
+	urlscrape = urlval[0]
+	r1 = requests.get(urlscrape)
+	soup1 = BeautifulSoup(r1.content,'html.parser')
+	opening = soup1.find('div',attrs={'class':'theme-songs js-theme-songs opnening'})
+	hidden_opening = soup1.find('div',attrs={'class':'hide js-viewOpEd','id':'opTheme'})
+	final_opening = "Anime Openings \n"
+	if(hidden_opening != None and opening != None):
+		opening = opening.findAll('span',attrs={'class':'theme-song'})
+		hidden_opening = hidden_opening.findAll('span',attrs={'class':'theme-song'})
+		for row in opening:
+			final_opening = final_opening+row.text+"\n"
+		for row in hidden_opening:
+			final_opening = final_opening+row.text+"\n"
+	elif(opening == None):
+		final_opening =final_opening+"It is a manga \n"
+	else:
+		opening = opening.findAll('span',attrs={'class':'theme-song'})
+		for row in opening:
+			final_opening = final_opening+row.text+"\n"
+	ending = soup1.find('div',attrs={'class':'theme-songs js-theme-songs ending'})
+	hidden_ending = soup1.find('div',attrs={'class':'hide js-viewOpEd','id':'edTheme'})
+	final_ending = "Anime Endings \n"
+	if(hidden_ending != None and ending != None):
+		ending = ending.findAll('span',attrs={'class':'theme-song'})
+		hidden_ending = hidden_ending.findAll('span',attrs={'class':'theme-song'})
+		for row in ending:
+			final_ending = final_ending+row.text+"\n"
+		for row in hidden_ending:
+			final_ending = final_ending+row.text+"\n"
+	elif(ending == None):
+		final_ending = final_ending+"It is a manga\n"
+	else:
+		ending = ending.findAll('span',attrs={'class':'theme-song'})
+		for row in ending:
+			final_ending = final_ending+row.text+"\n"
+	final_str = final_opening +final_ending
+	return final_str
