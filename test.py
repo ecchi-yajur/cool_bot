@@ -7,17 +7,13 @@ from youtube_dl import YoutubeDL
 from dotenv import load_dotenv
 from scraper import anime_desc,anime_info,anime_search,anime_recommend,anime_trailer
 from utils import easyembed
-from asyncio import sleep
-
+import asyncio
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 
 bot = commands.Bot(command_prefix='#')
 
 players = {}
-
-
-
 
 
 @bot.command(name='anime')
@@ -80,11 +76,15 @@ async def cool_bot(ctx,*args):
 			URL = info['formats'][-1]['url']
 			voiceClient.play(FFmpegPCMAudio(URL, **FFMPEG_OPTIONS))
 			while voiceClient.is_playing():
-				sleep(1)
+				await asyncio.sleep(1)
 			await voiceClient.disconnect()
+			print('bot has left voice channel')
 		else :
 			await ctx.send('invalid')	
-	else :
+	elif len(args) == 1:
+		if args[0] == 'owner':
+			await ctx.send('I was Coded by Yajurmani and Shreikthegod 😳')
+	else:
 		await ctx.send('invalid')	
 
 @bot.event
