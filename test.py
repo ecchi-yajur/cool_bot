@@ -17,6 +17,7 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 bot = commands.Bot(command_prefix='#')
 players = {}
 
+queue = []
 
 @bot.event
 async def on_ready():
@@ -93,11 +94,17 @@ async def cool_bot(ctx,*args):
 				info = ydl.extract_info(url, download=False)
 			URL = info['formats'][-1]['url']
 			await ctx.send(embed = easyembed(bot,'Music Time 🔈🔉🔊',"playing song " + video_title + "..." , thumbnailurl = 'no' , imgurl = thumbnail))
+
+			players[ctx.message.server.id] = voiceClient
+			
 			voiceClient.play(FFmpegPCMAudio(URL, **FFMPEG_OPTIONS))
 			while voiceClient.is_playing():
 				await asyncio.sleep(1)
-			await voiceClient.disconnect()
-			print('bot has left voice channel')
+			
+			queue.pop(0) # remove the current song
+			if len(queue) == 0:
+				await voiceClient.disconnect()
+				print('bot has left voice channel')
 		else :
 			await ctx.send('invalid ❌')	
 	elif len(args) == 1:
