@@ -1,7 +1,7 @@
 # cool_bot
 discord bot for anime rn
 
-# Help anime features
+# Help anime list of features
 ![help anime](Images/help.jpeg)
 
 # features 
