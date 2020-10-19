@@ -82,7 +82,7 @@ async def cool_bot(ctx,*args):
 				return
 			voiceChannel = voiceState.channel
 			voiceClient = await voiceChannel.connect()
-			YDL_OPTIONS = {'format': 'bestaudio', 'noplaylist':'True'}
+			YDL_OPTIONS = {'format': 'bestaudio', 'noplaylist':'True' , 'forceip':'4'}
 			FFMPEG_OPTIONS = {'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5', 'options': '-vn' , }
 			results = YoutubeSearch(search_query, max_results=10).to_json()
 			results = json.loads(results)
