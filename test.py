@@ -95,7 +95,6 @@ async def cool_bot(ctx,*args):
 			URL = info['formats'][-1]['url']
 			await ctx.send(embed = easyembed(bot,'Music Time 🔈🔉🔊',"playing song " + video_title + "..." , thumbnailurl = 'no' , imgurl = thumbnail))
 
-			players[ctx.message.server.id] = voiceClient
 			
 			voiceClient.play(FFmpegPCMAudio(URL, **FFMPEG_OPTIONS))
 			while voiceClient.is_playing():
