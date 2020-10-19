@@ -1,6 +1,9 @@
 # cool_bot
 discord bot for anime rn
 
+# Help anime features
+![help anime](Images/help.jpeg)
+
 # features 
 
 **1. Search for the description of an anime**
