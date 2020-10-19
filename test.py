@@ -103,7 +103,7 @@ async def cool_bot(ctx,*args):
 			queue.pop(0) # remove the current song
 			if len(queue) == 0:
 				await voiceClient.disconnect()
-				print('bot has left voice channel')
+				print('bot left voice channel')
 		else :
 			await ctx.send('invalid ❌')	
 	elif len(args) == 1:
