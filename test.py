@@ -6,7 +6,7 @@ from discord import FFmpegPCMAudio , FFmpegOpusAudio
 from youtube_dl import YoutubeDL
 from dotenv import load_dotenv
 from scraper import *
-from utils import easyembed
+from utils import easyembed,helpstring
 import asyncio
 from youtube_search import YoutubeSearch
 import json
@@ -49,7 +49,7 @@ async def on_ready():
 	print("Bot is ready now !")
 
 
-@bot.command(name='anime' , description = 'Runs all anime related commands')
+@bot.command(name='anime' , description = 'Runs all anime related commands',help=helpstring)
 async def cool_bot(ctx,*args):
 	if len(args) >1 :
 		if args[0] == 'desc':
