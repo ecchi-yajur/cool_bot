@@ -49,7 +49,7 @@ async def on_ready():
 	print("Bot is ready now !")
 
 
-@bot.command(name='anime' , description = 'Runs all anime related commands',help=helpstring)
+@bot.command(name='anime' ,brief='==> anime/manga + a little bit of music bot', description = 'Runs all anime related commands',help=helpstring)
 async def cool_bot(ctx,*args):
 	if len(args) >1 :
 		if args[0] == 'desc':
