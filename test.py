@@ -149,7 +149,7 @@ async def cool_bot(ctx,*args):
 			await ctx.send('invalid ❌')	
 	elif len(args) == 1:
 		if args[0] == 'owner':
-			await ctx.send('I was Coded by Shreikthegod 😳')
+			await ctx.send('I was Coded by Yajurmani and ShreiktheDUMB 😳')
 		elif args[0] == 'stop':
 			if ctx.guild.id in players and players[ctx.guild.id].is_playing():
 				await players[ctx.guild.id].disconnect()
